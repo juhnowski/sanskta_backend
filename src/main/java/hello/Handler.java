@@ -72,13 +72,13 @@ public class Handler {
         m.doVariants("", word);
 
         m.searchList.forEach((w) -> {
+            System.out.println("w:"+w);
             Entry e = m.checkWord(w);
             if (e != null) {
                 m.entrySet.add(e);
             }
         }
         );
-
         
         try {
             System.out.println(m.mainMapper.writeValueAsString(m.entrySet));
@@ -161,21 +161,22 @@ public class Handler {
         sb.append(prefix).append(word);
         String prefWord = sb.toString();
         searchList.add(prefWord);
+        System.out.println("+++ " + prefWord);
         transitionTable.forEach((SortedSet<String> seq) -> {
             seq.forEach((String ch) -> {
                 if (word.startsWith(ch)) {
                     seq.forEach((String c) -> {
-                        if (!c.equals(ch)) {
+                       // if (!c.equals(ch)) {
                             String newWord = word.replaceFirst(ch, c);
                             String pref = prefix + c;
-                            if (newWord.length() > 1) {
+                            //if (newWord.length() > 0) {
                                 String procWord = newWord.substring(c.length());
-                                if (procWord.length() > 0) {
+                               // if (procWord.length() > 0) {
                                     System.out.println("prefix=" + prefix + " word=" + word + " pref=" + pref + " procWord=" + procWord + " c=" + c + " ch=" + ch);
                                     doVariants(pref, procWord);
-                                }
-                            }
-                        }
+                                //}
+                            //}
+                        //}
                     });
                 }
             });
